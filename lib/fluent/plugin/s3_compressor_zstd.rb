@@ -1,12 +1,18 @@
-# lib/fluent/plugin/s3_compressor_zstd.rb
-require 'zstd-ruby' # zstd 압축을 위한 Ruby 라이브러리
+require 'fluent/plugin/out_s3'
+require 'zstd-ruby'
 
 module Fluent::Plugin
   class S3Output
     class ZstdCompressor < Compressor
-      S3Output.register_compressor('zstd', self)
+      Fluent::Plugin::S3Output.register_compressor('zstd', self)
 
       config_param :level, :integer, default: 3, desc: "Compression level for zstd (1-22)"
+
+      def initialize(opts = {})
+        super()
+        @buffer_type = opts[:buffer_type]
+        @log = opts[:log]
+      end
 
       def ext
         'zst'.freeze
@@ -17,12 +23,15 @@ module Fluent::Plugin
       end
 
       def compress(chunk, tmp)
-        compressor = Zstd::Compressor.new(level: @level)
-        compressed_data = compressor.compress(chunk.read)
+        uncompressed_data = ''
+        chunk.open do |io|
+          uncompressed_data = io.read
+        end
+        compressed_data = Zstd.compress(uncompressed_data, level: @level)
         tmp.write(compressed_data)
       rescue => e
         log.warn "zstd compression failed: #{e.message}"
-        raise
+        raise e
       end
     end
   end

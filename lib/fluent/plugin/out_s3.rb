@@ -1,4 +1,4 @@
-require 'fluent/plugin/s3_compressor_zstd' # zstd 컴프레서 추가
+# require 'fluent/plugin/s3_compressor_zstd' # zstd 컴프레서 추가
 require 'fluent/plugin/output'
 require 'fluent/log-ext'
 require 'fluent/timezone'
@@ -659,8 +659,8 @@ module Fluent::Plugin
     {
       'gzip' => GzipCompressor,
       'json' => JsonCompressor,
-      'text' => TextCompressor,
-      'zstd' => ZstdCompressor # zstd 컴프레서 등록
+      'text' => TextCompressor
+      # 'zstd' => ZstdCompressor # zstd 컴프레서 등록
     }.each { |name, compressor|
       COMPRESSOR_REGISTRY.register(name, compressor)
     }
@@ -668,5 +668,8 @@ module Fluent::Plugin
     def self.register_compressor(name, compressor)
       COMPRESSOR_REGISTRY.register(name, compressor)
     end
+
+    # 추가 컴프레서 파일 로드 (Compressor 클래스 정의 후)
+    require 'fluent/plugin/s3_compressor_zstd'
   end
 end
