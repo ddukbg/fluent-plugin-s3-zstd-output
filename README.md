@@ -6,7 +6,7 @@
 ## 설치
 ```bash
 gem install fluent-plugin-s3-zstd
-
+```
 
 # Amazon S3 plugin for [Fluentd](http://github.com/fluent/fluentd)
 
