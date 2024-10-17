@@ -1,3 +1,13 @@
+# Fluent Plugin for S3 Output with zstd Compression
+
+## 소개
+이 플러그인은 Fluentd에서 Amazon S3로 로그를 전송할 때 zstd 압축을 지원하도록 하기 위함(진행중)
+
+## 설치
+```bash
+gem install fluent-plugin-s3-zstd
+
+
 # Amazon S3 plugin for [Fluentd](http://github.com/fluent/fluentd)
 
 [<img src="https://travis-ci.org/fluent/fluent-plugin-s3.svg?branch=master"
