@@ -3,6 +3,7 @@
 *~
 [._]*.s[a-w][a-z]
 .DS_Store
+README.md
 
 *.gem
 .bundle
