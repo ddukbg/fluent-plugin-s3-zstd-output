@@ -8,39 +8,39 @@ require_relative '../lib/fluent/plugin/s3_compressor_zstd'
 
 class ZstdCompressorTest < Test::Unit::TestCase
   def test_compress_and_decompress
-    # 테스트용 데이터 준비
+    # Prepare test data
     data = {"message" => "test log data"}
     json_data = JSON.generate(data) + "\n"
 
-    # 임시 파일 생성
+    # Create a temporary file
     tmp = Tempfile.new('zstd-test')
     tmp.binmode
 
     begin
-      # Logger 인스턴스 생성
+      # Create a Logger instance
       test_logger = Logger.new(nil)
 
-      # ZstdCompressor 인스턴스 생성
+      # Create a ZstdCompressor instance
       compressor = Fluent::Plugin::S3Output::ZstdCompressor.new(log: test_logger)
 
-      # 청크 모킹
+      # Mocking chunk
       chunk = Object.new
       def chunk.open(&block)
         io = StringIO.new(JSON.generate({"message" => "test log data"}) + "\n")
         block.call(io)
       end
 
-      # 압축 실행
+      # Perform compression
       compressor.compress(chunk, tmp)
       tmp.rewind
 
-      # 압축된 데이터 읽기
+      # Read the compressed data
       compressed_data = tmp.read
 
-      # 압축 해제
+      # Decompress the data
       decompressed_data = Zstd.decompress(compressed_data)
 
-      # 원본 데이터와 비교
+      # Compare with the original data
       assert_equal(json_data, decompressed_data)
     ensure
       tmp.close
