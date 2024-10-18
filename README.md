@@ -6,6 +6,7 @@
 # Fluentd S3 출력 플러그인 (Zstandard 압축 지원)
 
 ***S3 Gzip으로 저장되는 로그 데이터를 Zstd로 저장하기 위한 커스텀 플러그인***
+<img width="1096" alt="image" src="https://github.com/user-attachments/assets/c1066d87-1c32-4d92-b501-616b000e10a0">
 
 **주의:** 저는 Ruby 전문가가 아니므로 일부 내용이 정확하지 않을 수 있습니다. 그리고 아직 테스트 단계이므로 운영환경에 사용하면 안됩니다!
 
