@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "fluentd", [">= 0.14.22", "< 2"]
   gem.add_dependency "aws-sdk-s3", "~> 1.60"
   gem.add_dependency "aws-sdk-sqs", "~> 1.23"
-  gem.add_dependency "zstd-ruby", "~> 1.4" # zstd-ruby 의존성 추가
+  gem.add_dependency "zstd-ruby", "~> 1.4" # Add zstd-ruby dependency
 
   gem.add_development_dependency "rake", ">= 0.9.2"
   gem.add_development_dependency "test-unit", ">= 3.0.8"
